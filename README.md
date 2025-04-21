@@ -3,8 +3,6 @@
 ## Descrição
 Esta é uma API Flask que realiza autenticação e predições usando um modelo de aprendizado de máquina treinado com o conjunto de dados Iris. A API utiliza tokens JWT para proteger endpoints sensíveis, garantindo segurança nas operações.
 
-A documentação completa da API está definida no arquivo [`swagger.yaml`](swagger.yaml).
-
 ---
 
 ## Endpoints Disponíveis
