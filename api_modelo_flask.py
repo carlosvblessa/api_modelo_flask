@@ -9,6 +9,8 @@ import joblib
 import numpy as np
 from sqlalchemy import create_engine, Column, Integer, Float, String, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
+from flasgger import Swagger
+import yaml
 
 JWT_SECRET = "MEUSEGREDOAQUI"
 JWT_ALGORITHM = "HS256"
@@ -40,6 +42,9 @@ logger.info("Modelo carregado com sucesso.")
 app = Flask(__name__)
 
 # Lê o YAML
+with open('swagger.yaml', 'r') as f:
+    swagger_template = yaml.safe_load(f)
+swagger = Swagger(app, template=swagger_template)
 
 predictions_cache = {}
 
