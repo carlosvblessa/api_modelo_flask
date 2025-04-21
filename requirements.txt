@@ -3,4 +3,3 @@ PyJWT==2.10.1
 joblib==1.4.2
 numpy==2.2.5
 SQLAlchemy==2.0.40
-scikit-learn==1.6.1
