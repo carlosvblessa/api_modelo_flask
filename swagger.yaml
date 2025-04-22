@@ -4,7 +4,7 @@ info:
   description: "API para autenticação e predição usando um modelo de machine learning"
   version: "1.0.0"
 servers:
-  - url: http://localhost:5000
+  - url: http://localhost:5001
     description: Local server
 
 securityDefinitions:
