@@ -12,7 +12,6 @@ services:
       pip install -r requirements.txt
     startCommand: >            # comando para iniciar seu FastAPI
       gunicorn api_modelo_flask:app
-      -k uvicorn.workers.UvicornWorker
       -b 0.0.0.0:$PORT
     envVars:                    # variáveis de ambiente
       - key: JWT_SECRET
