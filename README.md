@@ -124,7 +124,7 @@ Para rodar esta API localmente, você precisará dos seguintes itens instalados:
 ## Instalação
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/api_modelo_flask.git
+   git clone https://github.com/carlosvblessa/api_modelo_flask.git
    cd api_modelo_flask
    ```
 
@@ -145,7 +145,7 @@ Para rodar esta API localmente, você precisará dos seguintes itens instalados:
    python api_modelo_flask.py
    ```
 
-A API estará disponível em `http://localhost:5000`.
+A API estará disponível em `http://localhost:10000`.
 
 ---
 
