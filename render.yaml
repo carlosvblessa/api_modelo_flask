@@ -1,8 +1,8 @@
 # render.yaml
 
 services:
-  - type: web_service           # tipo de serviço no Render
-    name: iris-flaskapi         # nome que aparecerá no dashboard
+  - type: web                 # tipo de serviço no Render
+    name: api_modelo_flask         # nome que aparecerá no dashboard
     env: python                # runtime Python
     region: oregon             # data center (ex: oregon, frankfurt, ireland…)
     branch: main               # branch que dispara o build/deploy
@@ -11,12 +11,12 @@ services:
       pip install --upgrade pip
       pip install -r requirements.txt
     startCommand: >            # comando para iniciar seu FastAPI
-      gunicorn api_modelo_fast:app
+      gunicorn api_modelo_flask:app
       -k uvicorn.workers.UvicornWorker
       -b 0.0.0.0:$PORT
     envVars:                    # variáveis de ambiente
       - key: JWT_SECRET
-        fromSecret: jwt_secret      # crie este Secret no painel do Render
+        value: JWT_PLACEHOLDER      
       - key: DB_URL
         value: sqlite:///predictions.db
       - key: PORT
