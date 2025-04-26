@@ -71,16 +71,24 @@ def token_required(f):
           401:
             description: Token inválido ou ausente.
         """
-        auth_header = request.headers.get("Authorization")
-        if not auth_header:
-            return jsonify({"error": "Token ausente"}), 401
+        auth_header = request.headers.get("Authorization", "")
+        parts = auth_header.split()
+
+        # Checa se veio exatamente "JWT <token>"
+        if len(parts) != 2 or parts[0] != "JWT":
+            return jsonify({
+                "error": "Token inválido ou ausente.",
+                "message": "Use Authorization: 'JWT <token>'"
+            }), 401
+        
+        token = parts[1]
         try:
-            token = auth_header.split(" ")[1]
-            payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+            jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         except jwt.ExpiredSignatureError:
-            return jsonify({"error": "Token expirado"}), 401
+            return jsonify({"error": "Token expirado."}), 401
         except jwt.InvalidTokenError:
-            return jsonify({"error": "Token inválido"}), 401
+            return jsonify({"error": "Token inválido."}), 401
+
         return f(*args, **kwargs)
     return decorated
 
