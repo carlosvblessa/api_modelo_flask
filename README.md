@@ -142,15 +142,15 @@ Para rodar esta API localmente, você precisará dos seguintes itens instalados:
 
 4. Execute a API:
    ```bash
-   python api_modelo_flask.py
+   gunicorn api_modelo_flask:app --reload -b 127.0.0.1:8000
    ```
 
-A API estará disponível em `http://localhost:10000`.
+A API estará disponível em `http://127.0.0.1:8000`.
 
 ---
 
 ## Uso
-- Para testar a API, você pode usar ferramentas como [Postman](https://www.postman.com/) ou [cURL](https://curl.se/).
+- Para testar a API, você pode usar ferramentas como [Postman](https://www.postman.com/) ou [cURL](https://curl.se/) ou ainda em http://127.0.0.1:8000/apidocs/.
 - Consulte o arquivo [`swagger.yaml`](swagger.yaml) para detalhes completos da documentação.
 
 ---
