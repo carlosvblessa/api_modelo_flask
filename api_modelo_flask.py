@@ -4,7 +4,7 @@ import datetime
 import jwt
 from functools import wraps
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import joblib
 import numpy as np
 from sqlalchemy import create_engine, Column, Integer, Float, String, DateTime
@@ -166,3 +166,79 @@ def list_predictions():
         })
     return jsonify(results)
 
+@app.route("/", methods=["GET"])
+def root():
+    """
+    Página inicial da API.
+    ---
+    tags:
+      - Raiz
+    responses:
+      200:
+        description: Página HTML de boas-vindas
+        schema:
+          type: string
+          example: "<!DOCTYPE html>…"
+    """
+    # protocolo (http/https) e host
+    proto = "https" if request.is_secure else "http"
+    host = request.host
+
+    # monta a URL completa para o Swagger UI (Flasgger default: /apidocs/)
+    docs_url = f"{proto}://{host}/apidocs/#/"
+
+    # ano atual
+    year = datetime.datetime.utcnow().year
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>API Iris Prediction</title>
+  <style>
+    body {{ font-family: Arial, sans-serif; margin: 40px; background-color: #f7f9fc; color: #333; }}
+    h1 {{ color: #2c3e50; }}
+    ul {{ list-style-type: square; padding-left: 20px; }}
+    a {{ color: #3498db; text-decoration: none; }}
+    a:hover {{ text-decoration: underline; }}
+    .footer {{ margin-top: 40px; font-size: 0.9em; color: #777; }}
+  </style>
+</head>
+<body>
+  <h1>🌼 Bem-vindo à API de Previsão Iris com Flask!</h1>
+  <p>Esta é uma API REST simples para prever espécies de Iris com base em medidas de pétalas e sépalas.</p>
+
+  <h2>🔗 Endpoints Disponíveis:</h2>
+  <ul>
+    <li><code>POST /login</code>       – Gera token JWT</li>
+    <li><code>POST /predict</code>     – Realizar predição</li>
+    <li><code>GET  /predictions</code> – Listar predições</li>
+    <li><code>GET  /health</code>      – Verificar status da API</li>
+  </ul>
+
+  <h2>📄 Documentação Interativa:</h2>
+  <p><a href="{docs_url}" target="_blank">Acesse o Swagger UI</a></p>
+
+  <div class="footer">
+    &copy; {year} API Iris – Desenvolvido com Python + Flask + Flasgger
+  </div>
+</body>
+</html>"""
+
+    return Response(html, mimetype="text/html")
+
+@app.route("/health", methods=["GET"])
+def health():
+    # verifica conexão com o banco
+    try:
+        conn = engine.connect()
+        conn.close()
+        db_status = "up"
+    except Exception as e:
+        logger.error("Falha no health check do DB: %s", e)
+        db_status = "down"
+
+    return jsonify({
+        "status": "ok" if db_status == "up" else "fail",
+        "db": db_status
+    }), 200

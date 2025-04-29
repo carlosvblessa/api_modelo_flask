@@ -3,9 +3,12 @@ info:
   title: "API de Predição de Iris"
   description: "API para autenticação e predição usando um modelo de machine learning"
   version: "1.0.0"
+
+
 servers:
   - url: http://localhost:5000
     description: Local server
+
 
 securityDefinitions:
   JWT:
@@ -14,46 +17,61 @@ securityDefinitions:
     in: header
 
 # aplica JWT por padrão a todas as operações;
-# no login, sobrescrevemos com security: []
+# Onde for necessário, sobrescrevemos com security: []
+ 
 security:
   - JWT: []
 
 paths:
   /login:
     post:
+      tags:
+        - "Autenticação"
       summary: "Endpoint para autenticação de usuário"
-      security: []   # não exige token
+      security: []
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
-        - name: body
-          in: body
+        - in: body
+          name: body
+          description: "Credenciais do usuário"
           required: true
           schema:
             type: object
             properties:
               username:
                 type: string
-                example: admin
+                example: "admin"
               password:
                 type: string
-                example: secret
+                example: "secret"
       responses:
         200:
-          description: Token JWT gerado com sucesso.
+          description: "Token JWT gerado com sucesso."
           schema:
             type: object
             properties:
               token:
                 type: string
-                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         401:
-          description: Credenciais inválidas.
-          
+          description: "Credenciais inválidas."
+
   /predict:
     post:
-      summary: "Endpoint protegido por token para obter predição"
+      tags:
+        - "Predição"
+      summary: "Endpoint protegido por token para gerar predição única"
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
-        - name: body
-          in: body
+        - in: body
+          name: body
+          description: "Medidas de sépala e pétala"
           required: true
           schema:
             type: object
@@ -76,7 +94,7 @@ paths:
                 example: 0.2
       responses:
         200:
-          description: Predição realizada com sucesso.
+          description: "Predição realizada com sucesso."
           schema:
             type: object
             properties:
@@ -84,26 +102,31 @@ paths:
                 type: integer
                 example: 0
         400:
-          description: Dados inválidos.
+          description: "Dados inválidos."
         401:
-          description: Token inválido ou ausente.
+          description: "Token inválido ou ausente."
 
   /predictions:
     get:
+      tags:
+        - "Predições"
+      summary: "Endpoint protegido por token para listar predições armazenadas"
+      produces:
+        - application/json
       parameters:
-        - name: limit
-          in: query
+        - in: query
+          name: limit
           type: integer
-          description: Quantidade de registros a serem retornados (padrão = 10).
+          description: "Número de registros a retornar (padrão = 10)."
           example: 5
-        - name: offset
-          in: query
+        - in: query
+          name: offset
           type: integer
-          description: A partir de qual registro começar (padrão = 0).
+          description: "Índice inicial (padrão = 0)."
           example: 10
       responses:
         200:
-          description: Lista de predições.
+          description: "Lista de predições."
           schema:
             type: array
             items:
@@ -134,7 +157,42 @@ paths:
                 created_at:
                   type: string
                   format: date-time
-                  example: 2023-10-01T12:34:56Z
+                  example: "2025-04-29T16:00:00Z"
         401:
-          description: Token inválido ou ausente.
+          description: "Token inválido ou ausente."
 
+  /:
+    get:
+      tags:
+        - "Raiz"
+      summary: "Página HTML de boas-vindas"
+      security: []
+      produces:
+        - text/html
+      responses:
+        200:
+          description: "Página HTML de boas-vindas"
+          schema:
+            type: string
+            example: "<!DOCTYPE html><html>…</html>"
+
+  /health:
+    get:
+      tags:
+        - "Infra"
+      summary: "Health check da aplicação e do banco"
+      security: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "Status de saúde da API e do banco"
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: "ok"
+              db:
+                type: string
+                example: "up"
