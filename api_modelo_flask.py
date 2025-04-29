@@ -210,7 +210,7 @@ def root():
 
   <h2>🔗 Endpoints Disponíveis:</h2>
   <ul>
-    <li><code>GET  /</code>               - Gera esta página HTML</li>
+    <li><code>GET  /</code>            – Gera esta página HTML</li>
     <li><code>POST /login</code>       – Autenticação e geração de token JWT</li>
     <li><code>POST /predict</code>     – Realizar predição (protegido por token JWT)</li>
     <li><code>GET  /predictions</code> – Listar predições (protegido por token JWT)</li>
