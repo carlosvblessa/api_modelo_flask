@@ -210,10 +210,11 @@ def root():
 
   <h2>🔗 Endpoints Disponíveis:</h2>
   <ul>
-    <li><code>POST /login</code>       – Gera token JWT</li>
-    <li><code>POST /predict</code>     – Realizar predição</li>
-    <li><code>GET  /predictions</code> – Listar predições</li>
-    <li><code>GET  /health</code>      – Verificar status da API</li>
+    <li><code>GET  /</code>               - Gera esta página HTML</li>
+    <li><code>POST /login</code>       – Autenticação e geração de token JWT</li>
+    <li><code>POST /predict</code>     – Realizar predição (protegido por token JWT)</li>
+    <li><code>GET  /predictions</code> – Listar predições (protegido por token JWT)</li>
+    <li><code>GET  /health</code>      – Verificar status da API e do Banco</li>
   </ul>
 
   <h2>📄 Documentação Interativa:</h2>
