@@ -12,15 +12,15 @@ A documentação completa da API está definida no arquivo [`swagger.yaml`](swag
 ```
 
 api_modelo_flask/
-├── api_modelo_flask.py               # Endpoints e submissão dos dados ao modelo
-├── modelo_iris_LR.pkl                # Modelo de Regressão Logística para classificar as espécies
-├── predictions.db                    # Base de dados SQLite com as predições
-├── README.md                         # Instruções do projeto
-├── LICENSE                           # MIT license
-├── render.yaml                       # Parâmetros de inicialização para o render
-├── requirements.txt                  # Dependências do projeto
-├── swagger.yaml                      # Documentação Swagger
-└── .gitignore                        # Ignora arquivos desnecessários
+├── api_modelo_flask.py  # Endpoints e submissão dos dados ao modelo
+├── modelo_iris_LR.pkl   # Modelo de Regressão Logística para classificar as espécies
+├── predictions.db       # Base de dados SQLite com as predições
+├── README.md            # Instruções do projeto
+├── LICENSE              # MIT license
+├── render.yaml          # Parâmetros de inicialização para o render
+├── requirements.txt     # Dependências do projeto
+├── swagger.yaml         # Documentação Swagger
+└── .gitignore           # Ignora arquivos desnecessários
 
 ```
 
